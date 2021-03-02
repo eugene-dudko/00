@@ -1,0 +1,20 @@
+#!/bin/bash
+
+TOKEN="1348021516:AAGv0yBrXgPdWKumXla7024nOjqYxgRfk5c"
+CHAT_ID="-1001197543685"
+h=`hostname`
+
+###условие выполнения(90%)
+d=`df -h |grep -v "Use%"| awk '$5 > "90"'`
+
+###выводимое содержимое####
+d2=`df -h | grep -v "Use%" | awk '$5 >= "90"{print $5, $1}'`
+
+M=`echo -e "\t"!!ACHTUNG!!"\n"${h}"\n""\t"`
+URL="https://api.telegram.org/bot$TOKEN/sendMessage"
+M2=`echo -e "\t"!!ACHTUNG!!"\n"${h}"\n""\t""\v"  "$d2"| awk '{if($d>24) print $d2}'`
+M3=$(ip a | grep inet | awk '{print $2}' | grep "/24")
+if [ -n "$d" ]
+then
+    curl -s -X POST $URL -d chat_id=$CHAT_ID -d text="$M $d2 $M3"
+fi
