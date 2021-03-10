@@ -18,3 +18,4 @@ if [ -n "$d" ]
 then
     curl -s -X POST $URL -d chat_id=$CHAT_ID -d text="$M $d2 $M3"
 fi
+####
